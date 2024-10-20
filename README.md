@@ -14,6 +14,10 @@
 
 **Optional** Path to the test project file. Won't run tests if `test-project-path` is null.
 
+### `timeout`
+
+**Optional** Timeout minutes of the CI. Default is `60`.
+
 ## ⚡ Example Usage
 
 ```yaml
@@ -26,4 +30,5 @@ jobs:
         with:
           project-path: './src/FluentHub.App/FluentHub.App.csproj'
           test-project-path: './src/FluentHub.Tests/FluentHub.Tests.csproj'
+          timeout: 15
 ```
