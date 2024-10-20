@@ -1,0 +1,50 @@
+name: 'CI Action'
+description: 'A simple action to build a Windows App Sdk app.'
+
+branding:
+  icon: cpu
+  color: white
+
+inputs:
+  project-path:
+    description: 'Path to the project file'
+    required: false
+    default: ''
+  test-path:
+    description: 'Path to the test project file'
+    required: false
+    default: ''
+  timeout:
+    description: 'Timeout minutes of the CI'
+    required: false
+    default: 60
+    
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install Dependencies
+      uses: Lamparter/Install-WindowsSdk@v1.0.0
+      timeout-minutes: ${{ env.STEP_TIMEOUT_MINUTES }}
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build Project
+      if: ${{ input.project-path != '' }}
+      shell: pwsh
+      run: msbuild ${{ inputs.project-path }} /r
+
+    - name: Build Test Project
+      if: ${{ inputs.test-path != '' }}
+      shell: pwsh
+      run: msbuild ${{ inputs.test-path }} /p:Configuration=Release /r
+
+    - name: Run Unit Tests
+      if: ${{ inputs.test-path != '' }}
+      shell: pwsh
+      run: dotnet test ${{ inputs.test-path }} --no-build -c Release --logger GitHubActions --blame-crash --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
