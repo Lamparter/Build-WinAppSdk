@@ -26,7 +26,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Run CI Action
-        uses: Lamparter/Build-WinAppSdk@v1.0.0
+        uses: Lamparter/Build-WinAppSdk@latest
         with:
           project-path: './src/FluentHub.App/FluentHub.App.csproj'
           test-project-path: './src/FluentHub.Tests/FluentHub.Tests.csproj'
