@@ -28,7 +28,7 @@ runs:
         fetch-depth: 0
 
     - name: Install Dependencies
-      uses: Lamparter/Install-WindowsSdk@v1.0.0
+      uses: Lamparter/Install-Dependencies@latest
       timeout-minutes: ${{ inputs.timeout }}
 
     - name: Setup MSBuild
