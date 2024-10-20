@@ -29,7 +29,7 @@ runs:
 
     - name: Install Dependencies
       uses: Lamparter/Install-WindowsSdk@v1.0.0
-      timeout-minutes: ${{ env.STEP_TIMEOUT_MINUTES }}
+      timeout-minutes: ${{ inputs.timeout }}
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
